@@ -17,9 +17,6 @@ export const GameProvider = (props) => {
     }
 
     const createGame = (game) => {
-        let newGame = { ...game }
-        newGame['auth'] = {}
-
         return fetch("http://localhost:8000/games", {
             method: "POST",
             headers: {
