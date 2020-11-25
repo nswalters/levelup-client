@@ -17,7 +17,7 @@ export const GameForm = props => {
         numberOfPlayers: 0,
         title: "",
         maker: "",
-        gameTypeId: 0
+        gameTypeId: 1
     })
 
     /*
@@ -84,8 +84,6 @@ export const GameForm = props => {
                     </select>
                 </div>
             </fieldset>
-
-            {/* You create the rest of the input fields for each game property */}
 
             <button type="submit"
                 onClick={evt => {
