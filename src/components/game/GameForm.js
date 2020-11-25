@@ -14,10 +14,10 @@ export const GameForm = props => {
     */
     const [currentGame, setCurrentGame] = useState({
         skillLevel: 1,
-        numberOfPlayers: 0,
+        numberOfPlayers: 1,
         title: "",
         maker: "",
-        gameTypeId: 1
+        gameTypeId: 0
     })
 
     /*
@@ -68,14 +68,15 @@ export const GameForm = props => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="numberOfPlayers">Number of Players: </label>
-                    <input type="number" name="numberOfPlayers" required className="form-control" defaultValue={currentGame.skillLevel} onChange={handleControlledInputChange}
+                    <input type="number" name="numberOfPlayers" required className="form-control" defaultValue={currentGame.numberOfPlayers} onChange={handleControlledInputChange}
                     />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="gameTypeId">Game Type: </label>
-                    <select name="gameTypeId" onChange={handleControlledInputChange}>
+                    <select name="gameTypeId" onChange={handleControlledInputChange} required>
+                        <option value="" default disabled selected>Choose a game type...</option>
                         {
                             gameTypes.map(gameType => (
                                 <option value={gameType.id} key={gameType.id}>{gameType.label}</option>
@@ -85,24 +86,31 @@ export const GameForm = props => {
                 </div>
             </fieldset>
 
-            <button type="submit"
-                onClick={evt => {
-                    // Prevent form from being submitted
-                    evt.preventDefault()
+            {/* Validate if fields are populated before showing Submit button */}
+            {(currentGame.gameTypeId > 0 &&
+                currentGame.title.length > 0 &&
+                currentGame.maker.length > 0)
+                ? (
+                    <button type="submit"
+                        onClick={evt => {
+                            // Prevent form from being submitted
+                            evt.preventDefault()
 
-                    const game = {
-                        maker: currentGame.maker,
-                        title: currentGame.title,
-                        numberOfPlayers: parseInt(currentGame.numberOfPlayers),
-                        skillLevel: parseInt(currentGame.skillLevel),
-                        gameTypeId: parseInt(currentGame.gameTypeId)
-                    }
+                            const game = {
+                                maker: currentGame.maker,
+                                title: currentGame.title,
+                                numberOfPlayers: parseInt(currentGame.numberOfPlayers),
+                                skillLevel: parseInt(currentGame.skillLevel),
+                                gameTypeId: parseInt(currentGame.gameTypeId)
+                            }
 
-                    // Send POST request to your API
-                    createGame(game)
-                    history.push('/')
-                }}
-                className="btn btn-primary">Create</button>
+                            // Send POST request to your API
+                            createGame(game)
+                            history.push('/')
+                        }}
+                        className="btn-5 btn-primary">Create</button>
+                ) : ''
+            }
         </form>
     )
 }

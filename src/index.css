@@ -194,3 +194,7 @@ code {
 .icon-send:before {
 	content: "🔓";
 }
+
+.icon-create:before {
+	content: "🌟";
+}
